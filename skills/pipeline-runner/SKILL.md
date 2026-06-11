@@ -31,7 +31,7 @@ description: |
 
 ## Step 1 — 起飛前檢查（fail fast，省一次 workflow 啟動）
 
-1. Read `spec/goal-graph.json` → 確認 `schema_version === "1.0"`（不符 → 停，回報需要升級 contract）
+1. Read `spec/goal-graph.json` → 確認 `schema_version` 值等於 `"1.0"`（字串或數字皆可，`1.0 == "1.0"` 視為相符；不符 → 停，回報需要升級 contract）
 2. 抽查 `goals[].file` 指到的檔案存在（缺檔 → 停，回 goal-decomposer 重生成）
 3. 多 session 環境（repo 有 WORK-BOARD.md）→ 先掃「進行中」確認 `projectDir` 沒人認領，並加一列認領
 
