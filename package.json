@@ -1,0 +1,32 @@
+{
+  "name": "specmit",
+  "version": "0.2.1",
+  "description": "One-command installer for the dragon375014 AI dev toolchain: idea → spec → goals → parallel execution. specmit = spec + submit + MIT (Made in Taiwan).",
+  "type": "module",
+  "bin": {
+    "specmit": "bin/pipeline.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/"
+  ],
+  "keywords": [
+    "claude-code",
+    "ai-dev",
+    "spec-sonar",
+    "specmit",
+    "made-in-taiwan"
+  ],
+  "author": "dragon375014",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dragon375014/specmit.git"
+  },
+  "homepage": "https://github.com/dragon375014/specmit#readme",
+  "bugs": {
+    "url": "https://github.com/dragon375014/specmit/issues"
+  }
+}

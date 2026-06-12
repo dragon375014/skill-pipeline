@@ -122,4 +122,4 @@ batch 內平行的安全性由 goal-decomposer 的模組分解保證（這正是
 
 ## 生態系定位
 
-spec-sonar（收斂+分解）→ **本 skill + idea-to-mvp.js（執行軌）** → 各專案 domain skills（executor agent 的手）→ governance-meta（executor prompt 內建治理 hook：宿主閘門必須跑過不得繞）。地圖：ai-dev-toolkit/ECOSYSTEM.md。
+spec-sonar（收斂+分解）→ **本 skill + idea-to-mvp.js（執行軌）** → 各專案 domain skills（executor agent 的手）→ governance-meta（executor prompt 內建治理 hook：宿主閘門必須跑過不得繞）。地圖：[specmit/ECOSYSTEM.md](https://github.com/dragon375014/specmit/blob/main/ECOSYSTEM.md)。

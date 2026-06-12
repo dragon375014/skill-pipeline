@@ -5,8 +5,6 @@
 >
 > *specmit = spec + submit + MIT（Made in Taiwan）*
 
-🔒 **Private while spec-sonar is private** — this repo consumes spec-sonar's goal-graph format; it goes public together with (or after) spec-sonar, never before. See "Publication gate" below.
-
 ## The pipeline
 
 ```
@@ -36,7 +34,11 @@
 
 ## How to use
 
-1. Install the bridge skill into the project where you want to run a pipeline:
+1. Install — one command (installs the spec-sonar skills, this repo's bridge skill + workflow, and scaffolds `spec/` + `runs/`):
+   ```bash
+   npx specmit init
+   ```
+   Or copy manually:
    ```
    skills/pipeline-runner/  →  .claude/skills/pipeline-runner/
    workflows/idea-to-mvp.js →  .claude/workflows/idea-to-mvp.js
@@ -50,9 +52,11 @@
 ## Repo layout
 
 ```
+ECOSYSTEM.md                  the canonical map of the whole toolchain (all repos link here)
 PIPELINE-CONTRACT.md          L2 — file-format protocol (consumer contract)
 workflows/idea-to-mvp.js      L3 — Dynamic Workflow runner (validate → execute → report)
 skills/pipeline-runner/       L3b — bridge skill (trigger + pre-flight + writeback)
+bin/pipeline.js               the `specmit` npm CLI (init / sync / contrib)
 ```
 
 ## Design highlights
@@ -65,19 +69,19 @@ skills/pipeline-runner/       L3b — bridge skill (trigger + pre-flight + write
 
 ## Ecosystem
 
-This repo is the **execution rail** of the six-repo toolchain — full map: [ai-dev-toolkit/ECOSYSTEM.md](https://github.com/dragon375014/ai-dev-toolkit/blob/master/ECOSYSTEM.md).
+This repo is the **execution rail and front door** of a five-public-repo toolchain — the canonical map lives here: [ECOSYSTEM.md](./ECOSYSTEM.md).
 
-**One-command install** (drops all six tools into the right place):
+**One-command install** (core skills — spec-sonar's two + this repo's bridge skill and workflow — plus `spec/` and `runs/` scaffolding; sibling repos below install separately):
 ```bash
 npx specmit init
 ```
 
 Upstream: [spec-sonar](https://github.com/dragon375014/spec-sonar) (formats), [goal-workflow-designer](https://github.com/dragon375014/goal-workflow-designer) (single-task depth + homogeneous breadth). Execution-time: [claude-skills-governance-meta](https://github.com/dragon375014/claude-skills-governance-meta) (gates, enforced in the executor prompt), [agent-work-board](https://github.com/dragon375014/agent-work-board) (multi-session claims, in the bridge's pre-flight).
 
-## Publication gate
+## Publication status
 
-Public when **all** of: ① spec-sonar flips public (its PUBLIC-CHECKLIST.md has no ❌ rows); ② this pipeline validated end-to-end on ≥1 real project; ③ this repo passes its own history secret scan + gets a description review. Until then: private, iterate freely.
+Public since 2026-06-11. The original gate — ① spec-sonar public with a green [PUBLIC-CHECKLIST](https://github.com/dragon375014/spec-sonar/blob/main/PUBLIC-CHECKLIST.md), ② the pipeline validated end-to-end on ≥1 real project, ③ a full-history secret scan — was completed retroactively on 2026-06-12: validated on the MathBattle classroom-game pipeline run plus a 12-section external audit, and the secret scan across all toolchain repos came back clean.
 
 ## License
 
-MIT (effective on publication).
+MIT.
