@@ -34,6 +34,9 @@ description: |
 1. Read `spec/goal-graph.json` → 確認 `schema_version` 值等於 `"1.0"`（字串或數字皆可，`1.0 == "1.0"` 視為相符；不符 → 停，回報需要升級 contract）
 2. 抽查 `goals[].file` 指到的檔案存在（缺檔 → 停，回 goal-decomposer 重生成）
 3. 多 session 環境（repo 有 WORK-BOARD.md）→ 先掃「進行中」確認 `projectDir` 沒人認領，並加一列認領
+4. 引擎同一性檢查：確認 `scriptPath` 解析到**專案內**的 `.claude/workflows/idea-to-mvp.js`；
+   若使用者家目錄（`~/.claude/workflows/`）存在同名但內容分歧的副本 → 警告使用者
+   （兩份同名引擎、語義不同 = 換個 cwd 啟動就靜默改變行為，曾實際發生過 BLOCKED 語義完全相反的分歧）
 
 ## Step 1.5 — Pre-flight 簡報（輸出後立刻進 Step 2，不等使用者回覆）
 
@@ -102,6 +105,11 @@ batch 內平行的安全性由 goal-decomposer 的模組分解保證（這正是
 2. Status writeback：把每個 goal 的結果寫回 `goal-graph.json` 的 `goals[].status` —— **唯一可動欄位**（CONTRACT §4），其他一律不碰
 3. `summary.questions` 非空 → 把 BLOCKED 問題逐條呈給使用者（這是 BLOCKED protocol 的出口：agent 不猜，人來裁決），裁決後用 `only: [被擋的 ids]` resume
 4. 有 `failed` → 附 verify.evidence 回報，建議修復路徑（goal 層問題 → 改 goal 檔重跑；規格層問題 → 回 goal-decomposer）
+5. 彙整「未驗收清單」：對每個 `status === "done"` 的 goal，把其 goal 檔驗收條件中
+   未被機械執行的項目（executor notes 的 `UNVERIFIED:` 行 + summary.needs_manual_verification）
+   逐條抽出，寫 `runs/<run-id>/manual-verification.md` 並完整呈給使用者。
+   **報告措辭規則：done ≠ 驗收完成。** 標題行必須寫成「verified X / done-未驗 Y」，
+   不得讓 done 與 verified 合併讀成全綠（曾發生 24 條驗收無人執行卻被讀成全勝的事故）
 
 ## 失敗模式速查
 
